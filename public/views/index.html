@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app='scrabbleBoard'>
+  <head>
+    <meta charset="utf-8">
+    <title>Scrapple</title>
+    <!-- <script src="/node_modules/angular/angular.js"></script> -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js'></script>
+    <script src='../javascripts/controller.js'></script>
+    <link rel='stylesheet' href='../stylesheets/style.css' />
+  </head>
+  <body ng-controller='boardController as BC'>
+    <h1>Testaroony</h1>
+    <!-- <p id='board'>
+      {{BC.name}}
+    </p> -->
+    <div ng-repeat='(index, row) in BC.board'>
+      <div class='square' ng-repeat='(num, ind) in row'>
+        <div ng-model='num' ng-click='BC.printNum(num)'>
+          {{num}}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
