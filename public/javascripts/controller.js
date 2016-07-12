@@ -1,20 +1,46 @@
+function Board() {
+  var boardLayout = [];
+
+  var generateBoard = function() {
+    for (var i = 0; i < 16; i++) {
+      var arr = [];
+      for (var j = 0; j < 16; j++) {
+        var id = i.toString(16) + j.toString(16);
+        var square = {
+          id: id,
+          row: i,
+          col: j,
+          value: null
+        }
+      arr.push(square);
+      }
+      this.boardLayout.push(arr);
+    }
+  };
+  return {
+    boardLayout: boardLayout,
+    generateBoard: generateBoard
+  }
+}
+
 var app = angular.module('scrabbleBoard', []);
 
 app.controller('boardController', [function() {
   var vm = this;
-  vm.name = 'Alex';
-  vm.board = [];
-
-  vm.generateBoard = function() {
-    for (var i = 0; i < 10; i++) {
-      var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      vm.board.push(arr);
-    }
-  };
-
   vm.printNum = function(number) {
     console.log(number);
   }
-
-  vm.generateBoard();
+  vm.placedTiles = [];
+  vm.pushPlacedTile = function(input) {
+    console.log('pushing tile');
+    vm.placedTiles.push(input);
+  }
+  vm.listChanges = function() {
+    console.log('submitted');
+    for (var square in vm.placedTiles) {
+      console.log(vm.placedTiles[square]);
+    }
+  }
+  vm.board = new Board();
+  vm.board.generateBoard();
 }]);
