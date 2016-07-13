@@ -159,20 +159,12 @@ app.controller('boardController', ['$scope', function($scope) {
   vm.wordsCheck = function() {
     var words = [];
     for (var i = 0; i < vm.board.boardLayout.length; i++) {
-      // console.log('test homie');
       var word = [];
       for (var j = 0; j < vm.board.boardLayout[i].length; j++) {
-        // console.log('we are in the second for loop homie');
-        // if (vm.board.boardLayout[i][j].value !== "/") {
-          // console.log('test my condition homie');
           word.push(vm.board.boardLayout[i][j].value.letter);
-        // }
       }
-      // if (word){
-      //   words.push(word);
-      // }
-      newWord = word.filter(function())
-      word
+      //TODO: MAKE THIS FILTER WORK FOR REMOVING THE / FROM EACH ROW
+      // var newWord = word.filter(function())
     }
     console.log(words, 'these are my words homie');
   };
