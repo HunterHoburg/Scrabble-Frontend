@@ -3,21 +3,62 @@
   <head>
     <meta charset="utf-8">
     <title>Scrapple</title>
-    <!-- <script src="/node_modules/angular/angular.js"></script> -->
+    <!-- <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script> -->
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' />
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js'></script>
     <script src='../javascripts/app.js'></script>
     <script src='../javascripts/controller.js'></script>
     <link rel='stylesheet' href='../stylesheets/style.css' />
   </head>
   <body ng-controller='boardController as BC'>
-    <h1>Testaroony</h1>
-    <div ng-repeat='(index, row) in BC.board.boardLayout'>
-      <div class='square' ng-repeat='(ind, num) in row'>
-        <div ng-model='userInput' ng-change='BC.pushPlacedTile(userInput)'>
-          <input ng-model='num.value' type='text' />
+    <div class='container'>
+      <div class='page-header'>
+        <!-- Header -->
+          <h1>Scrapple<br /><small>Scrabble's Cooler Little Brother</small></h1>
+      </div>
+      <div class='row'>
+        <!-- Side Bar -->
+        <div class='col-md-2'>
+          <div class='row'>
+            <h3>Player 1</h3>
+            <h4>{{BC.p1Score}}</h4>
+          </div>
+          <div class='row'>
+            <h3>Player 2</h3>
+            <h4>{{BC.p2Score}}</h4>
+          </div>
+          <div class='row'>
+            <h3>Player 3</h3>
+            <h4>{{BC.p3Score}}</h4>
+          </div>
+          <div class='row'>
+            <h3>Player 4</h3>
+            <h4>{{BC.p4Score}}</h4>
+          </div>
+        </div>
+        <!-- The Board -->
+        <div class='col-md-10'>
+          <div ng-repeat='(index, row) in BC.board.boardLayout'>
+            <div class='square' ng-repeat='(ind, num) in row'  ng-click='BC.letterCheck($event, num)'>
+              <!-- {{num.row}}-{{num.col}} -->
+            </div>
+          </div>
+          <button ng-click='BC.getLetters()'>Give me some letters, dummy!</button>
+          <button ng-click='BC.listChanges()'>Submit Your Word, Dingus</button>
+        </div>
+      </div>
+      <!-- Player's Rack -->
+      <div class='row'>
+        <div class='col-md-12'>
+          <h2>Your Letters</h2>
+          <div class='row'>
+            <div class='letterTile' ng-repeat='(index, letter) in BC.player1.letters' ng-click='BC.rackToBoard(letter)' ng-model='letter'>
+              <h1>{{letter.letter}}</h1>
+              <h4>{{letter.value}}</h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <button ng-click='BC.listChanges()'>Submit</button>
   </body>
 </html>

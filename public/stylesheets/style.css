@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -16,4 +15,9 @@ a {
 
 .square input {
   width: 37px;
+}
+
+.letterTile {
+  display: inline-block;
+  padding-left: 3rem;
 }
