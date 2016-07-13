@@ -7,17 +7,19 @@ a {
 }
 
 .square {
+  vertical-align: top;
   display: inline-block;
   width: 40px;
   height: 40px;
   border: 1px solid black;
 }
 
-.square input {
-  width: 37px;
-}
-
 .letterTile {
   display: inline-block;
   padding-left: 3rem;
+  background-color: rgb(194, 215, 244);
+  margin: 1rem;
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid rgb(41, 41, 41);
 }

@@ -28,8 +28,8 @@ var app = angular.module('scrabbleBoard', []);
 app.controller('boardController', ['$scope', function($scope) {
   var vm = this;
   vm.scrabbleLetters = [
-    {letter: 'BLA', value: 0},
-    {letter: 'BLA', value: 0},
+    // {letter: 'BLA', value: 0},
+    // {letter: 'BLA', value: 0},
     {letter: 'E', value: 1},
     {letter: 'E', value: 1},
     {letter: 'E', value: 1},
@@ -182,9 +182,11 @@ app.controller('boardController', ['$scope', function($scope) {
       console.log("can't place a letter here, dum dum!");
     } else {
       var i = num.row;
+      var k = ((i - 1) > 0) ? i-1 : 0;
       var j = num.col;
-      if(!vm.board.boardLayout[i][j-1] && !vm.board.boardLayout[i][j+1] && !vm.board.boardLayout[i-1][j] && !vm.board.boardLayout[i+1][j]) {
-        console.log("not valid place letter here");
+      var l = ((j - 1) > 0) ? j-1 : 0;
+      if(!vm.board.boardLayout[i][l].value && !vm.board.boardLayout[i][j+1].value && !vm.board.boardLayout[k][j].value && !vm.board.boardLayout[i+1][j].value) {
+        console.log("not a valid place 4 letters here");
       } else {
         vm.placeOnBoard(event, num);
       }
@@ -200,6 +202,7 @@ app.controller('boardController', ['$scope', function($scope) {
     vm.board.boardLayout[num.row][num.col].value = vm.currentLetter;
     vm.currentLetter = {};
   }
+  vm.playedWords = [];
   vm.player1 = {
     letters: [],
     score: 0,
