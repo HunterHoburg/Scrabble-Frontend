@@ -10,7 +10,7 @@ function Board() {
           id: id,
           row: i,
           col: j,
-          value: null
+          value: "/"
         }
       arr.push(square);
       }
@@ -154,11 +154,27 @@ app.controller('boardController', ['$scope', function($scope) {
       vm.player1.letters.push(newLetter);
       vm.scrabbleLetters.splice(vm.scrabbleLetters.indexOf(newLetter), 1);
     }
-
   };
 
   vm.wordsCheck = function() {
-    // USE THIS FUNCTION TO VERIFY WORDS IN THE MIDDLE OF THE PLACEONBOARD FUNCTION
+    var words = [];
+    for (var i = 0; i < vm.board.boardLayout.length; i++) {
+      // console.log('test homie');
+      var word = [];
+      for (var j = 0; j < vm.board.boardLayout[i].length; j++) {
+        // console.log('we are in the second for loop homie');
+        // if (vm.board.boardLayout[i][j].value !== "/") {
+          // console.log('test my condition homie');
+          word.push(vm.board.boardLayout[i][j].value.letter);
+        // }
+      }
+      // if (word){
+      //   words.push(word);
+      // }
+      newWord = word.filter(function())
+      word
+    }
+    console.log(words, 'these are my words homie');
   };
 
   vm.currentRow;
@@ -202,13 +218,15 @@ app.controller('boardController', ['$scope', function($scope) {
     vm.board.boardLayout[num.row][num.col].value = vm.currentLetter;
     vm.currentLetter = {};
   }
-  vm.playedWords = [];
+  vm.playedWords = [
+    'feat',
+    'feated'
+  ];
   vm.player1 = {
     letters: [],
     score: 0,
     isTurn: true
   };
-  // vm.player1.letters = [{letter: 'A', value: 1}, {letter: 'B', value: 3}, {letter: 'C', value: 3}, {letter: 'D', value: 2}];
   vm.board = new Board();
   vm.board.generateBoard();
 }]);
