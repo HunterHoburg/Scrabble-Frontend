@@ -23,3 +23,15 @@ a {
   height: 10rem;
   border: 1px solid rgb(41, 41, 41);
 }
+
+.row:nth-child(2n+2) .square:nth-child(2n+1) {
+  background-color: rgb(148, 237, 221);
+}
+
+.row:nth-child(2n+2) .square:nth-child(2n+2) {
+  background-color: rgb(244, 152, 229);
+}
+
+/*.square:nth-child(2n+1) {
+  background-color: rgb(244, 152, 229);
+}*/

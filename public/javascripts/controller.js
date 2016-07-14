@@ -10,7 +10,7 @@ function Board() {
           id: id,
           row: i,
           col: j,
-          value: "/"
+          value: null
         }
       arr.push(square);
       }
@@ -24,8 +24,8 @@ function Board() {
 }
 
 var app = angular.module('scrabbleBoard', []);
-
-app.controller('boardController', ['$scope', function($scope) {
+// var parseString = require('xml2js').parseString;
+app.controller('boardController', ['$scope', '$http', function($scope, $http) {
   var vm = this;
   vm.scrabbleLetters = [
     // {letter: 'BLA', value: 0},
@@ -157,17 +157,47 @@ app.controller('boardController', ['$scope', function($scope) {
   };
 
   vm.wordsCheck = function() {
-    var words = [];
-    for (var i = 0; i < vm.board.boardLayout.length; i++) {
-      var word = [];
-      for (var j = 0; j < vm.board.boardLayout[i].length; j++) {
-          word.push(vm.board.boardLayout[i][j].value.letter);
-      }
-      //TODO: MAKE THIS FILTER WORK FOR REMOVING THE / FROM EACH ROW
-      // var newWord = word.filter(function())
-    }
-    console.log(words, 'these are my words homie');
-  };
+   var words = [];
+   for (var i = 0; i < vm.board.boardLayout.length; i++) {
+     var word = [];
+     for (var j = 0; j < vm.board.boardLayout[i].length; j++) {
+       if(vm.board.boardLayout[i][j].value){
+         word.push(vm.board.boardLayout[i][j].value.letter);
+       }
+     }
+     var newWord = word.filter(function(elem, index, arr) {
+       if (elem !== null) {
+         return elem;
+       }
+     })
+     if (word[0]) {
+       words.push(newWord);
+     }
+   }
+   console.log(words, 'these are my words homie');
+   for(var h = 0; h < words.length; h++) {
+     var newWord = words[h].join('');
+     if (newWord.length >= 2) {
+       $http({
+         method: 'GET',
+         url: 'http://www.wordgamedictionary.com/api/v1/references/scrabble/' + newWord + '?key=1.0879498205544081e30'
+       }).then(function(response) {
+         var x2js = new X2JS();
+         var parsedResponse = x2js.xml_str2json(response.data);
+          console.log('json output homie', parsedResponse);
+        //  console.log(response);
+         if(response.data[0]) {
+           console.log("this stuff's a word, dude!");
+         } else {
+           for (var t = 0; t < vm.placedTiles.length; t++) {
+             vm.player1.letters.push(vm.placedTiles[t]);
+             // vm.board.boardLayout[]
+           }
+         }
+       })
+     }
+   }
+ };
 
   vm.currentRow;
   vm.currentCol;
