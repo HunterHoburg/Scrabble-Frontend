@@ -155,7 +155,53 @@ app.controller('boardController', ['$scope', '$http', function($scope, $http) {
       vm.scrabbleLetters.splice(vm.scrabbleLetters.indexOf(newLetter), 1);
     }
   };
-
+ //
+ //  vm.wordsCheck = function() {
+ //   var words = [];
+ //   for (var i = 0; i < vm.board.boardLayout.length; i++) {
+ //     var word = [];
+ //     for (var j = 0; j < vm.board.boardLayout[i].length; j++) {
+ //       if(vm.board.boardLayout[i][j].value){
+ //         word.push(vm.board.boardLayout[i][j].value.letter);
+ //       }
+ //     }
+ //     var newWord = word.filter(function(elem, index, arr) {
+ //       if (elem !== null) {
+ //         return elem;
+ //       }
+ //     })
+ //     if (word[0]) {
+ //       words.push(newWord);
+ //     }
+ //   }
+ //
+ //   for(var h = 0; h < words.length; h++) {
+ //     var newWord = words[h].join('');
+ //     if (newWord.length >= 2) {
+ //       $http({
+ //         method: 'GET',
+ //         url: 'http://icant.co.uk/sandbox/scrabblr/?word=' + newWord
+ //       }).then(function(response) {
+ //         console.log('json output homie', response);
+ //         if(response.data === "0") {
+ //           console.log('not a word, nerd');
+ //         } else {
+ //           console.log('word length',words[h]);
+ //           console.log('that is a word');
+ //          // 1. Push these into the actual board
+ //          // 2. Push the words into an array
+ //          // 3. Tally up the points for the word
+ //          // for (var t = 0; t < words[h].length; t++) {
+ //          //   console.log(words[h][t]);
+ //          //   vm.player1.score += words[h][t].score;
+ //          // }
+ //          // console.log(vm.player1.score);
+ //
+ //         }
+ //       });
+ //     }
+ //   }
+ // };
   vm.wordsCheck = function() {
    var words = [];
    for (var i = 0; i < vm.board.boardLayout.length; i++) {
@@ -174,27 +220,30 @@ app.controller('boardController', ['$scope', '$http', function($scope, $http) {
        words.push(newWord);
      }
    }
-   console.log(words, 'these are my words homie');
+
    for(var h = 0; h < words.length; h++) {
      var newWord = words[h].join('');
      if (newWord.length >= 2) {
        $http({
          method: 'GET',
          url: 'http://www.wordgamedictionary.com/api/v1/references/scrabble/' + newWord + '?key=1.0879498205544081e30'
-       }).then(function(response) {
+       }).then(function(response, words) {
          var x2js = new X2JS();
          var parsedResponse = x2js.xml_str2json(response.data);
-          console.log('json output homie', parsedResponse);
-        //  console.log(response);
-         if(response.data[0]) {
-           console.log("this stuff's a word, dude!");
+         console.log('json output homie', parsedResponse);
+         if(parsedResponse.entry.scrabble === "0") {
+           console.log('not a word, nerd');
          } else {
-           for (var t = 0; t < vm.placedTiles.length; t++) {
-             vm.player1.letters.push(vm.placedTiles[t]);
-             // vm.board.boardLayout[]
-           }
+          //  console.log('word length',words[h]);
+           console.log('that is a word');
+          // 1. Push these into the actual board
+          // 2. Push the words into an array
+          // 3. Tally up the points for the word
+          console.log(vm.board.boardLayout);
+          vm.player1.score += 10;
+          console.log(vm.player1.score);
          }
-       })
+       });
      }
    }
  };
